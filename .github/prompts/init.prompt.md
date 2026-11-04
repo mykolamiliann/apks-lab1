@@ -18,6 +18,10 @@ agent: build-engineer
 передати наступному результати попереднього. Повторний запуск не руйнує
 файли й не дублює конфігурації. Після завершення показати підсумковий звіт.
 
+На Windows запускати npm тільки як `npm.cmd` (`npm.cmd install`,
+`npm.cmd run build`, `npm.cmd test`); на Linux/macOS використовувати `npm`.
+Ніколи не змінювати політику виконання PowerShell.
+
 ## Очікувані файли
 
 Результат визначається успішним виконанням усіх п'яти кроків: структура
@@ -28,8 +32,10 @@ TypeScript-проєкту, npm build/test/start, локальні CI-скрип�
 
 ```text
 git status --short --branch
-npm run build
-npm test
+Windows: npm.cmd run build
+Windows: npm.cmd test
+Linux/macOS: npm run build
+Linux/macOS: npm test
 node build/hello.js
 ```
 

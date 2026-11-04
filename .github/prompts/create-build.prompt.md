@@ -18,6 +18,10 @@ agent: build-engineer
 і `ci.bat`; встановити залежності лише відповідно до наявних lock-файлів.
 Не перезаписувати сумісні налаштування.
 
+На Windows запускати npm тільки як `npm.cmd` (`npm.cmd install`,
+`npm.cmd run build`, `npm.cmd test`); на Linux/macOS використовувати `npm`.
+Ніколи не змінювати політику виконання PowerShell.
+
 Не видаляти файли, не виконувати `git push`, `git push --force`,
 `git reset --hard`, переписування Git, зміну захисту гілок або роботу із
 секретами.
@@ -31,8 +35,10 @@ agent: build-engineer
 ## Команди перевірки
 
 ```text
-npm run build
-npm test
+Windows: npm.cmd run build
+Windows: npm.cmd test
+Linux/macOS: npm run build
+Linux/macOS: npm test
 node build/hello.js
 ```
 
