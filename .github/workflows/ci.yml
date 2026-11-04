@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+      - feature/**
+  pull_request:
+    branches:
+      - develop
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Run CI on Linux and macOS
+        if: runner.os != 'Windows'
+        run: bash ci.sh
+      - name: Run CI on Windows
+        if: runner.os == 'Windows'
+        run: ci.bat
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.os }}
+          path: build/
