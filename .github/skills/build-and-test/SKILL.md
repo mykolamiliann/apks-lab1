@@ -36,6 +36,10 @@ description: "Налаштовує npm-збірку TypeScript, тестуван
 будь-який крок не вдався. Повторний запуск не дублює scripts, залежності,
 функцію, тест або конфігураційні правила.
 
+На Windows запускати npm тільки як `npm.cmd`: `npm.cmd install`,
+`npm.cmd run build`, `npm.cmd test`. На Linux/macOS використовувати `npm`.
+Ніколи не змінювати політику виконання PowerShell.
+
 ## Перевірки
 
 1. Перевірити наявність `package.json`, `tsconfig.json`, `src/math.ts`,
@@ -75,3 +79,8 @@ description: "Налаштовує npm-збірку TypeScript, тестуван
 до build, test і start; якщо встановлення або будь-який наступний крок
 завершився помилкою, скрипт одразу повертає ненульовий код і записує
 деталі до `docs/ai-log.md`.
+
+Якщо на Windows PowerShell блокує `npm.ps1` з помилкою
+`PSSecurityException`, не змінювати політику виконання PowerShell. Повторити
+команди через `npm.cmd install`, `npm.cmd run build` і `npm.cmd test`;
+на Linux/macOS залишити команди `npm install`, `npm run build` і `npm test`.

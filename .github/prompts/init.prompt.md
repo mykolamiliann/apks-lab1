@@ -15,8 +15,16 @@ agent: build-engineer
 
 Послідовно запустити `git-init` → `create-project` → `create-build` →
 `create-actions` → `check`. Перед кожним кроком перевірити передумови та
-передати наступному результати попереднього. Повторний запуск не руйнує
-файли й не дублює конфігурації. Після завершення показати підсумковий звіт.
+передати наступному результати попереднього. Якщо `package.json` і
+`src/hello.ts` ще не існують, `git-init` на `develop` або `master` має
+зупинитися з підказкою `git switch -c feature/<назва>`; автоматично гілку не
+перемикати. Якщо проєкт уже існує, на будь-якій гілці показати попередження й
+продовжити. Повторний запуск не руйнує файли й не дублює конфігурації. Після
+завершення показати підсумковий звіт.
+
+На Windows запускати npm тільки як `npm.cmd` (`npm.cmd install`,
+`npm.cmd run build`, `npm.cmd test`); на Linux/macOS використовувати `npm`.
+Ніколи не змінювати політику виконання PowerShell.
 
 ## Очікувані файли
 
@@ -28,8 +36,10 @@ TypeScript-проєкту, npm build/test/start, локальні CI-скрип�
 
 ```text
 git status --short --branch
-npm run build
-npm test
+Windows: npm.cmd run build
+Windows: npm.cmd test
+Linux/macOS: npm run build
+Linux/macOS: npm test
 node build/hello.js
 ```
 

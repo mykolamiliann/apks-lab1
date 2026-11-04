@@ -25,9 +25,11 @@ description: "Створює кросплатформний GitHub Actions CI д
 - тригером `push` для `feature/**`;
 - однією job з matrix `ubuntu-latest`, `windows-latest`,
   `macos-latest`;
+- `fail-fast: false` у strategy, щоб результат кожної ОС був незалежним;
 - кроками checkout і налаштування Node.js через `actions/setup-node` з
   LTS-версією;
-- запуском тільки `bash ci.sh` на Linux/macOS і `ci.bat` на Windows;
+- запуском тільки `bash ci.sh` на Linux/macOS і `ci.bat` на Windows через
+   `shell: cmd`;
 - збереженням `build/` як artifact із назвою, що містить назву ОС.
 
 Workflow не містить секретів, токенів або дубльованих команд npm. Повторний
@@ -41,8 +43,8 @@ Workflow не містить секретів, токенів або дубль�
 3. Переконатися, що є `push` і `pull_request` для `develop` і `master`, а
    також `push` для `feature/**`.
 4. Перевірити checkout, setup-node з LTS і завантаження `build/` artifact.
-5. Перевірити умовний запуск: Linux/macOS виконують `bash ci.sh`, Windows —
-   `ci.bat`.
+5. Перевірити `fail-fast: false` та умовний запуск: Linux/macOS виконують
+   `bash ci.sh`, Windows — `ci.bat` через `shell: cmd`.
 6. Переконатися, що yml запускає лише `ci.sh`/`ci.bat`, без команд npm.
 7. Перевірити відсутність секретів і токенів у тексті workflow.
 
@@ -74,3 +76,9 @@ push/pull_request у визначених гілках.
 Порівняти тригери, matrix, кроки та artifact, додати лише відсутні поля,
 потім повторно перевірити, що workflow запускає виключно `ci.sh` або
 `ci.bat`, і записати результат у `docs/ai-log.md`.
+
+Якщо на `windows-latest` крок із `run: ci.bat` не має `shell: cmd`, GitHub
+Actions запускає його через PowerShell, де файл поточного каталогу не
+знаходиться без префікса `./`. Додати `shell: cmd` до Windows-кроку, не
+замінюючи `run: ci.bat`. Також встановити `fail-fast: false` у strategy,
+щоб збій однієї ОС не скасовував результати інших платформ.

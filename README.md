@@ -14,3 +14,9 @@ GitHub Actions на Ubuntu, Windows та macOS.
 ## Запуск агента
 
 У Copilot Chat виберіть агента `build-engineer` і виконайте команду `/init`.
+Детальні команди наведено в [docs/usage.md](docs/usage.md).
+
+## TypeScript-проєкт
+
+Мінімальний Hello World-проєкт TypeScript збирається у каталог `build/` та
+запускається командою `npm start`.

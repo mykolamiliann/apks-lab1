@@ -13,13 +13,24 @@ agent: build-engineer
 
 ## Дії
 
+Перевірити, що файл `.github/agents/build-engineer.agent.md` існує, має
+frontmatter з полем `description` і містить розділи `Область відповідальності`,
+`Заборонені дії` та `Критерії успішного завершення`. Порівнювати назви розділів
+і значення ролі без урахування регістру, щоб `Build Engineer` і
+`build-engineer` перевірялися однаково; не вимагати конкретного регістру.
 Перевірити manifest агента з роллю, обмеженнями та критеріями завершення;
 три skills і шість commands; `src/hello.ts`, `src/math.ts`,
 `tests/math.test.ts`, `package.json`, `tsconfig.json`, `ci.sh`, `ci.bat`;
-складання через `npm run build`, тест `BasicAddition` через `npm test`,
+складання через `npm.cmd run build` і тест `BasicAddition` через
+`npm.cmd test` на Windows; на Linux/macOS використовувати `npm run build` і
+`npm test`;
 вивід `Hello World` через `node build/hello.js`; workflow із трьома ОС і
 виключно `ci.sh`/`ci.bat`; відсутність `build/` і `node_modules/` у
 `git ls-files`.
+
+На Windows запускати npm тільки як `npm.cmd` (`npm.cmd install`,
+`npm.cmd run build`, `npm.cmd test`); на Linux/macOS використовувати `npm`.
+Ніколи не змінювати політику виконання PowerShell.
 
 ## Очікувані файли
 
@@ -29,8 +40,10 @@ agent: build-engineer
 ## Команди перевірки
 
 ```text
-npm run build
-npm test
+Windows: npm.cmd run build
+Windows: npm.cmd test
+Linux/macOS: npm run build
+Linux/macOS: npm test
 node build/hello.js
 git ls-files build/ node_modules/
 ```
